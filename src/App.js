@@ -19,7 +19,7 @@ class App extends React.Component {
   //
   unsubscribeFromAuth = null;
   componentDidMount() {
-    console.log('ran');
+    // console.log('ran');
     // this is an 'open subscription'. IE it is unobstructive to end user. They can refresh and sessions are maintained
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       //
@@ -38,6 +38,7 @@ class App extends React.Component {
               // console.log(this.state);
             }
           );
+          // console.log(this.state.currentUser);
         });
       } else {
         // if this isn't in else then it fires twice....

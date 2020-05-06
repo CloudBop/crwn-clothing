@@ -59,7 +59,8 @@ export default class SignIn extends Component {
               Sign In
             </Button>
 
-            <Button onClick={signInWithGoogle} type="submit" value="Submit-Form" isGoogleSignIn={true}>
+            <Button onClick={signInWithGoogle} type="button" value="Submit-Form" isGoogleSignIn={true}>
+              {/*type=button or conflicts with the other form inputs - required attribute*/}
               Sign In With Google
             </Button>
           </div>

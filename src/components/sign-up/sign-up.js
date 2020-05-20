@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { auth, createUserProfileDocumentInFirestore } from '../../firebase/firebase.utils';
 import FormInput from '../form-input/form-input';
 import Button from '../../components/custom-button/custom-button';

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.actions';
 import './App.css';
 import Homepage from './pages/Homepage/Homepage';
 import ShopPage from './pages/shop/shop';
@@ -9,17 +11,11 @@ import { Switch, Route } from 'react-router-dom';
 import { auth, createUserProfileDocumentInFirestore } from './firebase/firebase.utils';
 //
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    };
-  }
   //
   unsubscribeFromAuth = null;
   componentDidMount() {
     // console.log('ran');
+    const { setCurrentUser } = this.props;
     // this is an 'open subscription'. IE it is unobstructive to end user. They can refresh and sessions are maintained
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       //
@@ -27,23 +23,20 @@ class App extends React.Component {
         const userRef = await createUserProfileDocumentInFirestore(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState(
+          setCurrentUser(
             {
-              currentUser: {
-                id: snapShot.id,
-                ...snapShot.data()
-              }
+              id: snapShot.id,
+              ...snapShot.data()
             },
             () => {
               // console.log(this.state);
             }
           );
-          // console.log(this.state.currentUser);
         });
       } else {
         // if this isn't in else then it fires twice....
         // userAuth === null
-        this.setState({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       }
 
       // this.setState({ currentUser: user });
@@ -73,4 +66,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(App);

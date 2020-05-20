@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
-function header({ currentUser }) {
+import CartIcon from '../cart-icon/CartIcon';
+function Header({ currentUser }) {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -31,6 +32,7 @@ function header({ currentUser }) {
             Sign In
           </Link>
         )}
+        <CartIcon />
       </div>
     </div>
   );
@@ -41,4 +43,4 @@ const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 });
 // connects state to component via props
-export default connect(mapStateToProps)(header);
+export default connect(mapStateToProps)(Header);

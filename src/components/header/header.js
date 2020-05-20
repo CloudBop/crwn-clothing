@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/CartIcon';
 import CartDropDown from '../cart-dropdown/CartDropDown';
-function Header({ currentUser, toggleCart }) {
+function Header({ currentUser, isHidden }) {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -35,7 +35,7 @@ function Header({ currentUser, toggleCart }) {
         )}
         <CartIcon />
       </div>
-      {toggleCart && <CartDropDown />}
+      {!isHidden && <CartDropDown />}
     </div>
   );
 }
@@ -43,7 +43,7 @@ function Header({ currentUser, toggleCart }) {
 // state=== top level root reducer
 const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
   currentUser: currentUser,
-  toggleCart: hidden
+  isHidden: hidden
 });
 
 // connects state to component via props

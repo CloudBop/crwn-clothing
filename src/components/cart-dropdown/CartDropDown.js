@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 import CustomButton from '../custom-button/custom-button';
 import './cart-drop-down.styles.scss';
 import CartItem from '../cart-item/CartItem';
 //
-function CartDropDown({ cartItems }) {
+function CartDropDown({ cartItems, history }) {
   return (
     <div className="cart-dropdown">
       <div className="cart-items">
@@ -16,7 +17,7 @@ function CartDropDown({ cartItems }) {
           <span className="empty-message">Your cart is empty</span>
         )}
       </div>
-      <CustomButton>GO TO CHECKOUT</CustomButton>
+      <CustomButton onClick={() => history.push('/checkout')}>GO TO CHECKOUT</CustomButton>
     </div>
   );
 }
@@ -24,5 +25,5 @@ function CartDropDown({ cartItems }) {
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems
 });
-
-export default connect(mapStateToProps, null)(CartDropDown);
+// important that withRouter is outtermose fn call. Remember: HOC take component as arg and return component.
+export default withRouter(connect(mapStateToProps, null)(CartDropDown));

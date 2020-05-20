@@ -7,7 +7,7 @@ import './App.css';
 import Homepage from './pages/Homepage/Homepage';
 import ShopPage from './pages/shop/shop';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
-
+import CheckoutPage from './pages/Checkout/Checkout';
 import Header from './components/header/header';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { auth, createUserProfileDocumentInFirestore } from './firebase/firebase.utils';
@@ -66,6 +66,7 @@ class App extends React.Component {
             path="/signin"
             render={() => (this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />)}
           />
+          <Route exact path="/checkout" component={CheckoutPage} />
         </Switch>
       </div>
     );

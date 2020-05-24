@@ -20,12 +20,22 @@ class ShopPage extends React.Component {
   componentDidMount() {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection('collections');
-    // get current state of this collection @firestore
-    collectionRef.onSnapshot(async snapshot => {
+    //
+    // - will only make request onMount. Not observable
+    collectionRef.get().then(snapshot => {
+      // promisified
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
       updateCollections(collectionsMap);
       this.setState({ loading: false });
     });
+
+    //
+    // OBSERVABLE will update state of this collection @firestore live
+    // collectionRef.onSnapshot(async snapshot => {
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   updateCollections(collectionsMap);
+    //   this.setState({ loading: false });
+    // });
   }
 
   render() {

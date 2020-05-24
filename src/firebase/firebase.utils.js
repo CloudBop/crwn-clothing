@@ -42,12 +42,50 @@ export const createUserProfileDocumentInFirestore = async (userAuth, additionalD
   }
   return userRef;
 };
-
+//
 firebase.initializeApp(config);
+//
+// - a function to hydrate collection in firestore
+// - create new collection of docs in FS - sanitised via map
+// addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => ({ title, items })));
+//
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  // create new collection from FS.
+  const collectionRef = firestore.collection(collectionKey);
+  // create a batch, to set store items together
+  const batch = firestore.batch();
+  // loop through array
+  objectsToAdd.forEach(obj => {
+    // create a new doc in collection
+    const newDocRef = collectionRef.doc();
+    // add to batch
+    batch.set(newDocRef, obj);
+  });
+  // returns a promise
+  return await batch.commit();
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 //
+export const convertCollectionsSnapshotToMap = collection => {
+  const transformedCollection = collection.docs.map(doc => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+  // console.log('transformedCollection', transformedCollection);
+  // convert array to object hash [item1,item2] to {item1:collection, item2:collection2}
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
+// google sign in stuff
 const provider = new firebase.auth.GoogleAuthProvider();
 // set trigger google pop for auth/signing
 provider.setCustomParameters({ prompt: 'select_account' });

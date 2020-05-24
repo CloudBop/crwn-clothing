@@ -4,9 +4,12 @@ const selectShop = state => state.shop;
 //
 export const selectCollections = createSelector([ selectShop ], shop => shop.collections);
 //
-export const selectCollectionsForPreview = createSelector([ selectCollections ], collections =>
-  Object.keys(collections).map(key => collections[key])
+export const selectCollectionsForPreview = createSelector(
+  [ selectCollections ],
+  // returns an array of our state:Map:hash
+  collections => (collections ? Object.keys(collections).map(key => collections[key]) : [])
 );
 //
 export const selectSingleCollection = collectionUrlParam =>
-  createSelector([ selectCollections ], collections => collections[collectionUrlParam]);
+  // can be nullable with no render error
+  createSelector([ selectCollections ], collections => (collections ? collections[collectionUrlParam] : []));

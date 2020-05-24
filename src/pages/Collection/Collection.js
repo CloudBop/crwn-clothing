@@ -4,8 +4,7 @@ import { selectSingleCollection } from '../../redux/shop/shop.selector';
 import './collection.styles.scss';
 import CollectionItem from '../../components/collection-item/CollectionItem';
 //
-function CollectionPage({ collection }) {
-  const { title, items } = collection;
+function CollectionPage({ collection: { title, items } }) {
   return (
     <div className="collection-page">
       <h2 className="title">{title}</h2>

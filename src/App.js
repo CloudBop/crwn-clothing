@@ -11,6 +11,7 @@ import CheckoutPage from './pages/Checkout/Checkout';
 import Header from './components/header/header';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { auth, createUserProfileDocumentInFirestore } from './firebase/firebase.utils';
+// import { selectCollectionsForPreview } from './redux/shop/shop.selector';
 //
 class App extends React.Component {
   //
@@ -40,7 +41,6 @@ class App extends React.Component {
         // userAuth === null
         setCurrentUser(userAuth);
       }
-
       // this.setState({ currentUser: user });
     });
     //... it does need to be close though
@@ -75,6 +75,7 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
+  // collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({

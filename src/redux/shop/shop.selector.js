@@ -13,3 +13,6 @@ export const selectCollectionsForPreview = createSelector(
 export const selectSingleCollection = collectionUrlParam =>
   // can be nullable with no render error
   createSelector([ selectCollections ], collections => (collections ? collections[collectionUrlParam] : []));
+//
+export const selectIsCollectionsFetching = createSelector([ selectShop ], shop => shop.isFetching);
+export const selectIsCollectionsLoaded = createSelector([ selectShop ], shop => !!shop.collections);

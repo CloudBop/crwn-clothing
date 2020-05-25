@@ -85,6 +85,22 @@ export const convertCollectionsSnapshotToMap = collection => {
     return accumulator;
   }, {});
 };
+//
+// IMPORTANT- mimicing functionality when firebase is not backend
+// -- promisifying firebase
+//
+export const getCurrentUser = () => {
+  // a promise orientated solution that our sagas can yield to/for
+  return new Promise((resolve, reject) => {
+    //
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+      // reject returns error from the API
+    }, reject);
+  });
+};
+//
 // google sign in stuff
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 // set trigger google pop for auth/signing

@@ -4,10 +4,8 @@ const INITIAL_STATE = {
   error: null
 };
 const userReducer = (state = INITIAL_STATE, action) => {
-  console.log('action', action);
   switch (action.type) {
     case UserActionTypes.SIGN_IN_SUCCESS:
-      console.log('reducer updated state', action);
       return {
         ...state,
         currentUser: action.payload,

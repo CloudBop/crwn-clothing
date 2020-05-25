@@ -20,29 +20,29 @@ class App extends React.Component {
     // console.log('ran');
     const { setCurrentUser } = this.props;
     // this is an 'open subscription'. IE it is unobstructive to end user. They can refresh and sessions are maintained
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      //
-      if (userAuth) {
-        const userRef = await createUserProfileDocumentInFirestore(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   //
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDocumentInFirestore(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser(
-            {
-              id: snapShot.id,
-              ...snapShot.data()
-            },
-            () => {
-              // console.log(this.state);
-            }
-          );
-        });
-      } else {
-        // if this isn't in else then it fires twice....
-        // userAuth === null
-        setCurrentUser(userAuth);
-      }
-      // this.setState({ currentUser: user });
-    });
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser(
+    //         {
+    //           id: snapShot.id,
+    //           ...snapShot.data()
+    //         },
+    //         () => {
+    //           // console.log(this.state);
+    //         }
+    //       );
+    //     });
+    //   } else {
+    //     // if this isn't in else then it fires twice....
+    //     // userAuth === null
+    //     setCurrentUser(userAuth);
+    //   }
+    //   // this.setState({ currentUser: user });
+    // });
     //... it does need to be close though
   }
   componentWillUnmount() {

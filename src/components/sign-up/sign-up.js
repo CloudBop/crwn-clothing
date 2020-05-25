@@ -1,10 +1,11 @@
 import React from 'react';
-import { auth, createUserProfileDocumentInFirestore } from '../../firebase/firebase.utils';
 import FormInput from '../form-input/form-input';
 import Button from '../../components/custom-button/custom-button';
 import './sign-up.styles.scss';
+import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user.actions';
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,26 +19,15 @@ export default class SignUp extends React.Component {
 
   handleSubmit = async evt => {
     evt.preventDefault();
+    const { signUpNewUser } = this.props;
     //
     const { displayName, email, password, confirmPassword } = this.state;
     if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      //
-      await createUserProfileDocumentInFirestore(user, { displayName });
-      // clear form
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      });
-      //
-    } catch (error) {}
+    // will redirect to '/'
+    signUpNewUser({ displayName, email, password });
   };
 
   handleChange = evt => {
@@ -100,3 +90,9 @@ export default class SignUp extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  signUpNewUser: userCredentials => dispatch(signUpStart(userCredentials))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

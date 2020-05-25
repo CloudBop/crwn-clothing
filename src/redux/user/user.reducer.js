@@ -20,6 +20,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     // can use multiple cases to return same state
     case UserActionTypes.SIGN_IN_FAILURE:
     case UserActionTypes.SIGN_OUT_FAILURE:
+    case UserActionTypes.SIGN_UP_FAILURE:
       return {
         ...state,
         // currentUser: null,

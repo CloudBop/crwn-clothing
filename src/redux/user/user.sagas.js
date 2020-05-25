@@ -1,6 +1,13 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import UserActionTypes from './user.types';
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure } from './user.actions';
+import {
+  signInSuccess,
+  signInFailure,
+  signOutSuccess,
+  signOutFailure,
+  signUpFailure,
+  signUpSuccess
+} from './user.actions';
 import {
   auth,
   googleProvider,
@@ -10,9 +17,9 @@ import {
 
 // SAGA ACTION GENERATORS
 //
-export function* getSnapshotFromUserAuth(userAuth) {
+export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
-    const userRef = yield call(createUserProfileDocumentInFirestore, userAuth);
+    const userRef = yield call(createUserProfileDocumentInFirestore, userAuth, additionalData);
     const userSnapshot = yield userRef.get();
     // 'put'/'dispatch' redux action
     yield put(
@@ -44,7 +51,6 @@ export function* signInWithEmail({ payload: { email, password } }) {
     yield put(signInFailure(error));
   }
 }
-
 export function* isUserAuthenticated() {
   //
   try {
@@ -59,7 +65,6 @@ export function* isUserAuthenticated() {
     yield put(signInFailure(error));
   }
 }
-
 export function* signOut() {
   //
   try {
@@ -68,6 +73,22 @@ export function* signOut() {
   } catch (error) {
     yield put(signOutFailure(error));
   }
+}
+// arguments from action generator
+export function* signUpNewUser({ payload: { email, password, displayName } }) {
+  //
+  try {
+    // if yield is ommited things break as user is undefined.
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    //
+    yield put(signUpSuccess({ user, additionalData: { displayName } }));
+    //
+  } catch (error) {
+    yield put(signUpFailure(error));
+  }
+}
+export function* signInAfterSignUp({ payload: { user, additionalData } }) {
+  yield getSnapshotFromUserAuth(user, additionalData);
 }
 
 // action-listeners
@@ -86,10 +107,16 @@ export function* onGoogleSignInStart() {
 export function* onUserCheckSession() {
   yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
-
 //
 export function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
+}
+//
+export function* onSignUpStart() {
+  yield takeLatest(UserActionTypes.SIGN_UP_START, signUpNewUser);
+}
+export function* onSignUpSuccess() {
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
 export function* userSagas() {
@@ -100,7 +127,9 @@ export function* userSagas() {
     call(onUserCheckSession),
     // -- interesting note -- comment line above un comment below
     // call(isUserAuthenticated) // instructor typo/error
-    call(onSignOutStart)
+    call(onSignOutStart),
+    call(onSignUpStart),
+    call(onSignUpSuccess)
   ]);
 }
 

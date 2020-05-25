@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
-import { setCurrentUser } from './redux/user/user.actions';
 import './App.css';
 import Homepage from './pages/Homepage/Homepage';
 import ShopPage from './pages/shop/shop';
@@ -10,41 +9,12 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import CheckoutPage from './pages/Checkout/Checkout';
 import Header from './components/header/header';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { auth, createUserProfileDocumentInFirestore } from './firebase/firebase.utils';
 // import { selectCollectionsForPreview } from './redux/shop/shop.selector';
 //
 class App extends React.Component {
   //
   unsubscribeFromAuth = null;
-  componentDidMount() {
-    // console.log('ran');
-    const { setCurrentUser } = this.props;
-    // this is an 'open subscription'. IE it is unobstructive to end user. They can refresh and sessions are maintained
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   //
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocumentInFirestore(userAuth);
-
-    //     userRef.onSnapshot(snapShot => {
-    //       setCurrentUser(
-    //         {
-    //           id: snapShot.id,
-    //           ...snapShot.data()
-    //         },
-    //         () => {
-    //           // console.log(this.state);
-    //         }
-    //       );
-    //     });
-    //   } else {
-    //     // if this isn't in else then it fires twice....
-    //     // userAuth === null
-    //     setCurrentUser(userAuth);
-    //   }
-    //   // this.setState({ currentUser: user });
-    // });
-    //... it does need to be close though
-  }
+  componentDidMount() {}
   componentWillUnmount() {
     // updates user credentials when app is unmounted from DOM/closed
     this.unsubscribeFromAuth();
@@ -78,8 +48,4 @@ const mapStateToProps = createStructuredSelector({
   // collectionsArray: selectCollectionsForPreview
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

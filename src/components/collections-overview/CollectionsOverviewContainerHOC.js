@@ -7,7 +7,7 @@ import CollectionsOverview from './CollectionsOverview';
 // have to match props that wrapped component is expecting
 const mapStateToProps = createStructuredSelector({
   isFetchingCollections: selectIsCollectionsFetching,
-  isCollectionsLoaded: selectIsCollectionsLoaded
+  isLoading: selectIsCollectionsFetching
 });
 // container pattern
 // const CollectionsOverviewContainer = connect(mapStateToProps)(WithSpinner(CollectionsOverview));

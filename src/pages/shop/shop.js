@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { Route } from 'react-router-dom';
 import CollectionsOverviewHOC from '../../components/collections-overview/CollectionsOverviewContainerHOC';
 import CollectionPageContainerHOC from '../Collection/CollectionContainerHOC';
@@ -9,8 +9,8 @@ class ShopPage extends React.Component {
   // this.state = {} - shorthand invokes construtor(super){this.state}
   //
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
     /** see notes */
   }
 
@@ -31,7 +31,7 @@ class ShopPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
   // pre-thunk
   //updateCollections: collectionsMap => dispatch(updateCollections(collectionsMap))
 });

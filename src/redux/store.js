@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 import rootReducer from './root-reducer';
-
+import { fetchCollectionsStart } from './shop/shop.sagas';
 // async stuff
 //
 // thunks
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') middlewares.push(logger);
 //
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 // redux-saga setup
-// sagaMiddleware.run()
+sagaMiddleware.run(fetchCollectionsStart);
 //
 // - leverage localStorage
 export const persistor = persistStore(store);

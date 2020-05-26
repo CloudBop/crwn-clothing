@@ -6,6 +6,7 @@ const path = require('path');
 //
 // KEEP KEYS SECRET
 if (process.env.NODE_ENV === 'production') require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // launch express
 const app = express();
 // Heroku (and other services) setup port for us. - not localhost:3000
@@ -32,4 +33,23 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(port, error => {
   if (error) throw error;
   console.log('server running on port' + port);
+});
+
+// connect to stripe to veryify secret from token identifyier
+app.post('/payment', (req, res) => {
+  // prepare info from request
+  const body = {
+    source: req.body.token.id,
+    amount: req.body.amount,
+    currency: 'usd'
+  };
+  //
+  stripe.charges.create(body, (stripeErr, stripeRes) => {
+    // what to respond with
+    if (stripeErr) {
+      res.status(500).send({ error: stripeErr });
+    } else {
+      res.status(200).send({ error: stripeRes });
+    }
+  });
 });

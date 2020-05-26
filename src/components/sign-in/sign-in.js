@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form-input/form-input';
 import Button from '../../components/custom-button/custom-button';
@@ -10,12 +10,12 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
   const { email, password } = userCredentials;
   //
-  handleSubmit = async evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     //
     emailSignInStart(email, password);
   };
-  handleChange = evt => {
+  const handleChange = evt => {
     const { value, name } = evt.currentTarget;
     //
     setUserCredentials({ ...userCredentials, [name]: value });

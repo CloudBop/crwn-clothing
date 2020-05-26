@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 //
 // KEEP KEYS SECRET
-if (process.env.NODE_ENV === 'production') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+//
+//
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // launch express
 const app = express();
@@ -28,13 +30,17 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 } else {
+  //
+  // for testing
+  // app.get('/', (req, res) => {
+  //   console.log('you hit me');
+  //   res.send('test response');
+  // });
 }
 // start listening for requests
 app.listen(port, error => {
   if (error) throw error;
-  console.log('server running on port' + port);
 });
-
 // connect to stripe to veryify secret from token identifyier
 app.post('/payment', (req, res) => {
   // prepare info from request
@@ -49,7 +55,7 @@ app.post('/payment', (req, res) => {
     if (stripeErr) {
       res.status(500).send({ error: stripeErr });
     } else {
-      res.status(200).send({ error: stripeRes });
+      res.status(200).send({ success: stripeRes });
     }
   });
 });

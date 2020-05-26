@@ -5,30 +5,31 @@ import { Route } from 'react-router-dom';
 import CollectionsOverviewHOC from '../../components/collections-overview/CollectionsOverviewContainerHOC';
 import CollectionPageContainerHOC from '../Collection/CollectionContainerHOC';
 //
-class ShopPage extends React.Component {
-  // this.state = {} - shorthand invokes construtor(super){this.state}
-  //
-  componentDidMount() {
-    const { fetchCollectionsStart } = this.props;
-    fetchCollectionsStart();
-    /** see notes */
-  }
+const ShopPage = props => {
+  const { match, fetchCollectionsStart } = props;
 
-  render() {
-    const { match } = this.props;
-    return (
-      <div className="shop-page">
-        <Route exact path={`${match.path}`} component={CollectionsOverviewHOC} />
-        {/** :collectionId === URL param */}
-        <Route
-          path={`${match.path}/:collectionId`}
-          // render={props => <CollectionPageWithSpinner isLoading={!isCollectionsLoaded} {...props} />}
-          component={CollectionPageContainerHOC}
-        />
-      </div>
-    );
-  }
-}
+  React.useEffect(
+    () => {
+      fetchCollectionsStart();
+      // return () => {
+      //   cleanup
+      // }
+    },
+    [ fetchCollectionsStart ]
+  );
+
+  return (
+    <div className="shop-page">
+      <Route exact path={`${match.path}`} component={CollectionsOverviewHOC} />
+      {/** :collectionId === URL param */}
+      <Route
+        path={`${match.path}/:collectionId`}
+        // render={props => <CollectionPageWithSpinner isLoading={!isCollectionsLoaded} {...props} />}
+        component={CollectionPageContainerHOC}
+      />
+    </div>
+  );
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
@@ -46,6 +47,7 @@ export default connect(null, mapDispatchToProps)(ShopPage);
 
 //   this.state = {};
 // }
+// this.state = {} - shorthand invokes construtor(super){this.state} - if RFC
 //
 //
 //

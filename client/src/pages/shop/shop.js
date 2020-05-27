@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { Route } from 'react-router-dom';
-import CollectionsOverviewHOC from '../../components/collections-overview/CollectionsOverviewContainerHOC';
-import CollectionPageContainerHOC from '../Collection/CollectionContainerHOC';
+// import CollectionsOverviewHOC from '../../components/collections-overview/CollectionsOverviewContainerHOC';
+// import CollectionPageContainerHOC from '../Collection/CollectionContainerHOC';
+import Spinner from '../../components/spinner/Spinner';
 //
+const CollectionsOverviewHOC = lazy(() =>
+  import('../../components/collections-overview/CollectionsOverviewContainerHOC')
+);
+const CollectionPageContainerHOC = lazy(() => import('../Collection/CollectionContainerHOC'));
+
+//
+
 const ShopPage = props => {
   const { match, fetchCollectionsStart } = props;
 
@@ -17,16 +25,17 @@ const ShopPage = props => {
     },
     [ fetchCollectionsStart ]
   );
-
   return (
     <div className="shop-page">
-      <Route exact path={`${match.path}`} component={CollectionsOverviewHOC} />
-      {/** :collectionId === URL param */}
-      <Route
-        path={`${match.path}/:collectionId`}
-        // render={props => <CollectionPageWithSpinner isLoading={!isCollectionsLoaded} {...props} />}
-        component={CollectionPageContainerHOC}
-      />
+      <Suspense fallback={<Spinner />}>
+        <Route exact path={`${match.path}`} component={CollectionsOverviewHOC} />
+        {/** :collectionId === URL param */}
+        <Route
+          path={`${match.path}/:collectionId`}
+          // render={props => <CollectionPageWithSpinner isLoading={!isCollectionsLoaded} {...props} />}
+          component={CollectionPageContainerHOC}
+        />
+      </Suspense>
     </div>
   );
 };

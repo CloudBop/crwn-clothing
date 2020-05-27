@@ -9,6 +9,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './global.styles';
 // import { selectCollectionsForPreview } from './redux/shop/shop.selector';
 import Spinner from './components/spinner/Spinner';
+import ErrorBoundary from './components/error-boundary/ErrorBoundary';
 // on route load - homepage is main/entrance pagem so it benefits less from lazy loading than other pages
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
 const ShopPage = lazy(() => import('./pages/shop/shop'));
@@ -33,13 +34,15 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        {/** lazy load everythig with suspense. */}
-        <Suspense fallback={<Spinner />}>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignInAndSignUp />)} />
-          <Route exact path="/checkout" component={CheckoutPage} />
-        </Suspense>
+        <ErrorBoundary>
+          {/** lazy load everythig with suspense. */}
+          <Suspense fallback={<Spinner />}>
+            <Route exact path="/" component={Homepage} />
+            <Route path="/shop" component={ShopPage} />
+            <Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignInAndSignUp />)} />
+            <Route exact path="/checkout" component={CheckoutPage} />
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
   );

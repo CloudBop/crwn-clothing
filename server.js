@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 // native node module
 const path = require('path');
+const compression = require('compression');
 //
 // KEEP KEYS SECRET
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
@@ -14,6 +15,8 @@ const app = express();
 // Heroku (and other services) setup port for us. - not localhost:3000
 const port = process.env.PORT || 5000;
 // SETUP MIDDLEWARE
+// compress to gzip - heroku doesn't gzip by default!
+app.use(compression());
 // - jsonify all requests
 app.use(bodyParser.json());
 // make url safe for web

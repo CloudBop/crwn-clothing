@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 // native node module
 const path = require('path');
 const compression = require('compression');
+const enforce = require('express-sslify');
 //
 // KEEP KEYS SECRET
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
@@ -21,6 +22,8 @@ app.use(compression());
 app.use(bodyParser.json());
 // make url safe for web
 app.use(bodyParser.urlencoded({ extended: true }));
+// heroku uses reverse proxy
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 // allow cross-origin requests. Frontend:3000 && backend:5000
 app.use(cors());
 //

@@ -15,7 +15,7 @@ const app = express();
 // Heroku (and other services) setup port for us. - not localhost:3000
 const port = process.env.PORT || 5000;
 // SETUP MIDDLEWARE
-// compress to gzip - heroku doesn't gzip by default!
+// compress to gzip - heroku doesn't gzip by default! But it shows gzip file sizes in build.
 app.use(compression());
 // - jsonify all requests
 app.use(bodyParser.json());

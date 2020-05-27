@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 // import './App.css';
-import Homepage from './pages/Homepage/Homepage';
-import ShopPage from './pages/shop/shop';
-import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
-import CheckoutPage from './pages/Checkout/Checkout';
 import Header from './components/header/header';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './global.styles';
 // import { selectCollectionsForPreview } from './redux/shop/shop.selector';
+
+// on route load - homepage is main/entrance pagem so it benefits less from lazy loading than other pages
+const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
+const ShopPage = lazy(() => import('./pages/shop/shop'));
+const SignInAndSignUp = lazy(() => import('./pages/sign-in-and-sign-up/SignInAndSignUp'));
+const CheckoutPage = lazy(() => import('./pages/Checkout/Checkout'));
 //
 const App = ({ checkUserSession, currentUser }) => {
   //
@@ -31,10 +33,13 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/shop" component={ShopPage} />
-        <Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignInAndSignUp />)} />
-        <Route exact path="/checkout" component={CheckoutPage} />
+        {/** lazy load everythig with suspense. */}
+        <Suspense fallback={<div>...Loading</div>}>
+          <Route exact path="/" component={Homepage} />
+          <Route path="/shop" component={ShopPage} />
+          <Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignInAndSignUp />)} />
+          <Route exact path="/checkout" component={CheckoutPage} />
+        </Suspense>
       </Switch>
     </div>
   );

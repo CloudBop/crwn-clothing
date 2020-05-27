@@ -44,6 +44,11 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(port, error => {
   if (error) throw error;
 });
+// setup service worker from C-R-A
+app.get('/service-worker.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'));
+});
+
 // connect to stripe to veryify secret from token identifyier
 app.post('/payment', (req, res) => {
   // prepare info from request

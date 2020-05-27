@@ -14,5 +14,6 @@ function CartItem({ item: { imageUrl, price, name, quantity } }) {
     </div>
   );
 }
-
-export default CartItem;
+// this is rendered in an array
+// stop rerenders of items in dropdown when other components are added to the cart
+export default React.memo(CartItem);

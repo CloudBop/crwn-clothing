@@ -2,14 +2,13 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
+// import { selectCollectionsForPreview } from './redux/shop/shop.selector';
 import { checkUserSession } from './redux/user/user.actions';
-// import './App.css';
-import Header from './components/header/header';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './global.styles';
-// import { selectCollectionsForPreview } from './redux/shop/shop.selector';
-import Spinner from './components/spinner/Spinner';
 import ErrorBoundary from './components/error-boundary/ErrorBoundary';
+import Header from './components/header/header';
+import Spinner from './components/spinner/Spinner';
 // on route load - homepage is main/entrance pagem so it benefits less from lazy loading than other pages
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
 const ShopPage = lazy(() => import('./pages/shop/shop'));
@@ -28,7 +27,7 @@ const App = ({ checkUserSession, currentUser }) => {
     },
     [ checkUserSession ]
   );
-
+  //
   return (
     <div>
       <GlobalStyle />

@@ -16,18 +16,18 @@ const app = express();
 // Heroku (and other services) setup port for us. - not localhost:3000
 const port = process.env.PORT || 5000;
 // SETUP MIDDLEWARE
-// compress to gzip - heroku doesn't gzip by default! But it shows gzip file sizes in build.
-app.use(compression());
 // - jsonify all requests
 app.use(bodyParser.json());
 // make url safe for web
 app.use(bodyParser.urlencoded({ extended: true }));
-// heroku uses reverse proxy
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
 // allow cross-origin requests. Frontend:3000 && backend:5000
 app.use(cors());
 //
 if (process.env.NODE_ENV === 'production') {
+  // compress to gzip - heroku doesn't gzip by default! But it shows gzip file sizes in build.
+  app.use(compression());
+  // heroku uses reverse proxy
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
   // point app to all the static files in build folder
   app.use(express.static(path.join(__dirname, 'client/build')));
 

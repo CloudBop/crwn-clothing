@@ -12,7 +12,7 @@ describe('Header component', () => {
     mockSignOutStart = jest.fn();
 
     const mockProps = {
-      hidden: true,
+      isHidden: true,
       currentUser: {
         uid: '123'
       },
@@ -26,14 +26,13 @@ describe('Header component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // xdescribe('if currentUser is present', () => {
+  // describe('if currentUser is present', () => {
   //   it('should render sign out link', () => {
   //     expect(wrapper.find('OptionLink').at(2).text()).toBe('SIGN OUT');
   //   });
 
   //   it('should call signOutStart method when link is clicked', () => {
-  //     wrapper.find('OptionLink').at(2).simulate('click');
-
+  //     wrapper.find('OptionsContainer').at(0).simulate('click');
   //     expect(mockSignOutStart).toHaveBeenCalled();
   //   });
   // });
@@ -52,11 +51,11 @@ describe('Header component', () => {
   //   });
   // });
 
-  // xdescribe('if hidden is true', () => {
-  //   it('should not render CartDropdown', () => {
-  //     expect(wrapper.exists(CartDropdown)).toBe(false);
-  //   });
-  // });
+  describe('if hidden is true', () => {
+    it('should not render CartDropdown', () => {
+      expect(wrapper.exists(CartDropdown)).toBe(false);
+    });
+  });
 
   describe('if currentUser is null', () => {
     it('should render CartDropdown', () => {

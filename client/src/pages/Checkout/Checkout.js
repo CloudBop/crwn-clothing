@@ -5,7 +5,7 @@ import { selectCartItems, selectCartItemsTotalPrice } from '../../redux/cart/car
 import CheckoutItem from '../../components/checkout-item/CheckoutItem';
 import StripeCheckoutBtn from '../../components/Stripe-Button/StripeButton';
 import './checkout.styles.scss';
-function CheckoutPage({ cartItems, total }) {
+export function CheckoutPage({ cartItems, total }) {
   return (
     <div className="checkout-page">
       <div className="checkout-header">

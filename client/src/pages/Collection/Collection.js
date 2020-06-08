@@ -6,7 +6,7 @@ import CollectionItem from '../../components/collection-item/CollectionItem';
 // import { useEffect } from 'react';
 // import { firestore } from '../../firebase/firebase.utils';
 //
-function CollectionPage({ collection: { title, items } }) {
+export function CollectionPage({ collection: { title, items } }) {
   // observer / subscriber using useEffect
   // useEffect(() => {
   //   console.log('I AM SUBSCRIBING');

@@ -13,7 +13,7 @@ const CollectionPageContainerHOC = lazy(() => import('../Collection/CollectionCo
 
 //
 
-const ShopPage = props => {
+export const ShopPage = props => {
   const { match, fetchCollectionsStart } = props;
 
   React.useEffect(

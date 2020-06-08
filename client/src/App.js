@@ -11,7 +11,7 @@ import Header from './components/header/header';
 import Spinner from './components/spinner/Spinner';
 // on route load - homepage is main/entrance pagem so it benefits less from lazy loading than other pages
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
-const ShopPage = lazy(() => import('./pages/shop/shop'));
+const ShopPage = lazy(() => import('./pages/shop/Shop'));
 const SignInAndSignUp = lazy(() => import('./pages/sign-in-and-sign-up/SignInAndSignUp'));
 const CheckoutPage = lazy(() => import('./pages/Checkout/Checkout'));
 //

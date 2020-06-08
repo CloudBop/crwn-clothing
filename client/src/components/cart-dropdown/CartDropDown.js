@@ -8,7 +8,7 @@ import CustomButton from '../custom-button/custom-button';
 import './cart-drop-down.styles.scss';
 import CartItem from '../cart-item/CartItem';
 //
-function CartDropDown({ cartItems, history, dispatch }) {
+export function CartDropDown({ cartItems, history, dispatch }) {
   return (
     <div className="cart-dropdown">
       <div className="cart-items">

@@ -6,7 +6,7 @@ import { selectCartItemsCountQuantity } from '../../redux/cart/cart.selectors';
 
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import './cart-icon.styles.scss';
-function CartIcon({ toggleCartHidden, itemCount }) {
+export function CartIcon({ toggleCartHidden, itemCount }) {
   return (
     <div className="cart-icon" onClick={toggleCartHidden}>
       <ShoppingIcon className="shopping-icon" />

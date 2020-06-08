@@ -1,6 +1,6 @@
 import React from 'react';
 import { SpinnerContainer, SpinnerOverlay } from './with-spinner.style';
-//
+// styled-component variant
 const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
   return isLoading ? (
     <SpinnerOverlay>
@@ -11,18 +11,6 @@ const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
   );
 };
 
-// const WithSpinnerExplicitSyntax = wrappedComponent => {
-//   const Spinner = ({ isLoading, ...otherProps }) => {
-//     return isLoading ? (
-//       <SpinnerOverlay>
-//         <SpinnerContainer />
-//       </SpinnerOverlay>
-//     ) : (
-//       <wrappedComponent {...otherProps} />
-//     );
-//   };
-//   return Spinner;
-// };
 export default WithSpinner;
 //
 // TEST - diff syntax
@@ -38,3 +26,15 @@ export default WithSpinner;
 //     );
 //   }
 // }
+// const WithSpinnerExplicitSyntax = wrappedComponent => {
+//   const Spinner = ({ isLoading, ...otherProps }) => {
+//     return isLoading ? (
+//       <SpinnerOverlay>
+//         <SpinnerContainer />
+//       </SpinnerOverlay>
+//     ) : (
+//       <wrappedComponent {...otherProps} />
+//     );
+//   };
+//   return Spinner;
+// };

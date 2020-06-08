@@ -20,7 +20,6 @@ describe('Header component', () => {
     };
 
     wrapper = shallow(<Header {...mockProps} />);
-    console.log(wrapper);
   });
 
   it('should render Header component', () => {

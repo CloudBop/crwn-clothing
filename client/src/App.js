@@ -7,7 +7,7 @@ import { checkUserSession } from './redux/user/user.actions';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GlobalStyle } from './global.styles';
 import ErrorBoundary from './components/error-boundary/ErrorBoundary';
-import Header from './components/header/header';
+import Header from './components/header/Header';
 import Spinner from './components/spinner/Spinner';
 // on route load - homepage is main/entrance pagem so it benefits less from lazy loading than other pages
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));

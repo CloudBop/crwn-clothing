@@ -10,7 +10,7 @@ import CartDropDown from '../cart-dropdown/CartDropDown';
 
 // import './header.styles.scss';
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
-function Header({ currentUser, isHidden, signOutStart }) {
+export function Header({ currentUser, isHidden, signOutStart }) {
   return (
     <HeaderContainer>
       <LogoContainer to="/">
